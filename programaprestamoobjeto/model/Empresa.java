@@ -3,6 +3,7 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
+import co.edu.uniquindio.programaprestamoobjeto.excepciones.ClienteExisteException;
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.ClienteNoEncontradoException;
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.EmpleadoExisteException;
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.EmpleadoNoEncontradoException;
@@ -112,30 +113,65 @@ public class Empresa {
 	 * @param ciudadResidencia
 	 * @param tipoDocumento
 	 * @throws SinCupoClientesException
+	 * @throws ClienteExisteException 
 	 */
-	public void crearCliente(String documento, String nombre, String genero, String ciudadResidencia, int tipoDocumento) throws SinCupoClientesException
+	public void crearCliente(String documento, String nombre, String genero, String ciudadResidencia, int tipoDocumento) 
+							throws  ClienteExisteException
 	{
-		if(cliente1==null)
+		int posicion;
+		boolean creado=false;
+		Cliente clienteAux=null;
+		posicion=obtenerPosicionCliente(documento);
+		
+		if(posicion==-1)
 		{
-			cliente1=new Cliente(documento,nombre,genero,ciudadResidencia,null);
-			cliente1.definirTipoDocumento(tipoDocumento);
-			imprimirVentana("Cliente :"+cliente1.getNombre()+" creado con éxito");
+			for(int i=0;i<listaClientes.length && !creado ;i++)
+			{
+				if(listaClientes[i]==null)
+				{
+					clienteAux= new Cliente(documento, nombre, genero, ciudadResidencia,tipoDocumento);
+					listaClientes[i]=clienteAux;
+					creado=true;
+					imprimirVentana("El cliente :"+listaClientes[i].getNombre()+
+									" ha sido creado con exito.");
+				}
+			}
 		}
 		else
 		{
-			if(cliente2==null)
-			{
-				cliente2=new Cliente(documento,nombre,genero,ciudadResidencia,null);
-				cliente2.definirTipoDocumento(tipoDocumento);
-				imprimirVentana("Cliente :"+cliente2.getNombre()+" creado con éxito");
-			}
-			else
-			{
-				throw new SinCupoClientesException("No hay cupos disponibles para crear más clientes.");
-			}
+			throw new ClienteExisteException("El empleado con la identificación "+documento
+					                          +" ya existe en la posicion :"+ ++posicion);
 		}
 	}
 
+	/**
+	 * método que busca la posicion de un cliente usando su codigo
+	 * si el cliente no es encontrado se retorna -1
+	 * @param documento
+	 * @return
+	 */
+	private int obtenerPosicionCliente(String documento) {
+		int      posicion=-1;
+		String   documentoCliente="";
+		boolean  encontrado=false;
+		Cliente clienteAux=null;
+		
+		for (int i=0;i<listaClientes.length && !encontrado; i++) {
+			clienteAux=listaClientes[i];
+			
+			if(clienteAux!=null)
+			{
+				documentoCliente=clienteAux.getDocumento();
+				if(documentoCliente.equalsIgnoreCase(documento))
+				{
+					posicion=i;
+					encontrado=true;
+				}
+			}
+			
+		}
+		return posicion;
+	}
 	/**
 	 * m�todo que sirve para imprimir un mensaje por ventana
 	 * @param mensaje
@@ -293,8 +329,10 @@ public class Empresa {
 			{
 				codigoEmpleado=empleadoAux.getCodigo();
 				if(codigoEmpleado.equalsIgnoreCase(codigoBuscar))
+				{
 					posicion=i;
 					encontrado=true;
+				}
 			}
 			
 		}
@@ -884,26 +922,33 @@ public class Empresa {
 	 * @throws SinClientesRegistradosException 
 	 */
 	public void imprimirClientesRegistrados() throws SinClientesRegistradosException {
-		String mensaje="";
-		int posicion=1;
-		if(cliente1!=null || cliente2!=null )
-		{
-			if(cliente1!=null)
-			{
-				mensaje+=posicion+". nombre :"+cliente1.getNombre()+" codigo :"+cliente1.getDocumento()+"\n";
-				posicion++;
-			}
-			if(cliente2!=null)
-			{
-				mensaje+=posicion+". nombre :"+cliente2.getNombre()+" codigo :"+cliente2.getDocumento()+"\n";
-				posicion++;
-			}
-			imprimirVentana(mensaje);
-		}
-		else
-		{
-			throw new SinClientesRegistradosException("No hay clientes registrados.");
-		}		
+		String datosClientes="";
+    	String mensaje="---Clientes registrados---\n";
+    	
+    	Cliente clienteAux=null;
+    	
+    	int posicion=1;
+
+    	for(int i=0;i<listaClientes.length;i++)
+    	{
+    		if(listaClientes[i]!=null)
+    		{
+    			clienteAux=listaClientes[i];
+    			
+    			datosClientes+=posicion+" Nombre: "+clienteAux.getNombre()+" Documento :"+clienteAux.getDocumento()+"\n";
+    			posicion++;
+    		}
+    	}
+    	
+    	if(datosClientes.isEmpty())
+    	{
+    		throw new SinClientesRegistradosException("No hay clientes registrados.");
+    	}
+    	else
+    	{
+    		mensaje+=datosClientes;
+    		imprimirVentana(mensaje);
+    	}
 	}
 	/**
 	 * método que verifica que el documento ingresado como parametro
@@ -952,31 +997,33 @@ public class Empresa {
      */
     public void imprimirEmpleadosRegistrados() throws SinEmpleadosRegistradosException
     {
-        String mensaje="";
-            int posicion=1;
-            if(empleado1!=null || empleado2!=null || empleado3!=null)
-            {
-                if(empleado1!=null)
-                {
-                    mensaje+=posicion+". nombre :"+empleado1.getNombre()+" codigo :"+empleado1.getCodigo()+"\n";
-                    posicion++;
-                }
-                if(empleado2!=null)
-                {
-                    mensaje+=posicion+". nombre :"+empleado2.getNombre()+" codigo :"+empleado2.getCodigo()+"\n";
-                    posicion++;
-                }
-                if(empleado3!=null)
-                {
-                    mensaje+=posicion+". nombre :"+empleado3.getNombre()+" codigo :"+empleado3.getCodigo()+"\n";
-                    posicion++;
-                }
-                imprimirVentana(mensaje);
-            }
-            else
-            {
-                throw new SinEmpleadosRegistradosException("No hay clientes registrados.");
-            }
+    	String datosEmpleados="";
+    	String mensaje="---Empleados registrados---\n";
+    	
+    	Empleado empleadoAux=null;
+    	
+    	int posicion=1;
+
+    	for(int i=0;i<listaEmpleados.length;i++)
+    	{
+    		if(listaEmpleados[i]!=null)
+    		{
+    			empleadoAux=listaEmpleados[i];
+    			
+    			datosEmpleados+=posicion+" Nombre: "+empleadoAux.getNombre()+" Codigo :"+empleadoAux.getCodigo()+"\n";
+    			posicion++;
+    		}
+    	}
+    	
+    	if(datosEmpleados.isEmpty())
+    	{
+    		throw new SinEmpleadosRegistradosException("No hay Empleados registrados.");
+    	}
+    	else
+    	{
+    		mensaje+=datosEmpleados;
+    		imprimirVentana(mensaje);
+    	}
 
     }
     /**
@@ -2052,6 +2099,184 @@ public void verificarCupoEmpleado() throws SinCupoEmpleadoException {
 	
 	if(error==true)
 		throw new SinCupoEmpleadoException("No hay cupos disponibles.");
+}
+/**
+ * método que retorna el toString de un empleado usando su código
+ * si el empleado no es encontrado se genera la excepción
+ * EmpleadoNoEncontradoException 
+ * @param codigo
+ * @throws EmpleadoNoEncontradoException
+ */
+public void mostrarEmpleado(String codigo) throws EmpleadoNoEncontradoException {
+	
+	int posicion;
+	
+	String datosEmpleado="";
+	Empleado empleadoAux=null;
+	posicion=obtenerPosicionEmpleado(codigo);
+	
+	if(posicion!=-1)
+	{
+		datosEmpleado+=listaEmpleados[posicion].toString();
+		imprimirVentana(datosEmpleado);
+	}
+	else
+	{
+		throw new EmpleadoNoEncontradoException("El empleado no ha sido encontrado...");
+	}
+}
+/**
+ * método que actualiza los datos de un empleado, el método
+ * encuantra al empleado usando el códigoAux.
+ * Si el empleado a actualizar no es encontrado, se genera
+ * un EmpleadoNoEncontradoException
+ * @param codigoAux
+ * @param nombre2
+ * @param codigo
+ * @param correo
+ * @param aniosExperiencia
+ * @throws EmpleadoNoEncontradoException
+ */
+public void actualizarEmpleado(String codigoAux, String nombre, String codigo, String correo,
+		String aniosExperiencia) throws EmpleadoNoEncontradoException {
+	int posicion;
+	Empleado empleadoAux=null;
+	posicion=obtenerPosicionEmpleado(codigoAux);
+	
+	if(posicion!=-1)
+	{
+		empleadoAux= new Empleado(nombre,codigo,correo,aniosExperiencia);
+		listaEmpleados[posicion]=empleadoAux;
+		imprimirVentana("El empleado "+listaEmpleados[posicion].getNombre()+
+				" ha sido actualizado con exito.");
+	}
+	else
+	{
+		throw new EmpleadoNoEncontradoException("El empleado no ha sido encontrado...");
+	}
+	
+}
+/**
+ * método que elimina un empleado, se busca al empleado usando el
+ * codigo ingresado como parametro, si el empleado no es encontrado
+ * se genera un EmpleadoNoEncontradoException
+ * @param codigo
+ * @throws EmpleadoNoEncontradoException
+ */
+public void eliminarEmpleado(String codigo) throws EmpleadoNoEncontradoException {
+	int posicion;
+	Empleado empleadoAux=null;
+	posicion=obtenerPosicionEmpleado(codigo);
+	
+	if(posicion!=-1)
+	{
+		listaEmpleados[posicion]=null;
+		imprimirVentana("El empleado con el código :"+codigo+
+				" ha sido eliminado con exito.");
+	}
+	else
+	{
+		throw new EmpleadoNoEncontradoException("El empleado no ha sido encontrado...");
+	}
+	
+}
+/**
+ * método que verifica si hay cupos disponibles para crear un cliente
+  * si no los hay retorna una excepción, si los hay  no genera la excepción.
+ * @throws SinCupoClientesException 
+ */
+public void verificarCupoCliente() throws SinCupoClientesException {
+	boolean error=true;
+	
+	for(int i=0;i<listaClientes.length && error==true;i++) {
+		if(listaClientes[i]==null)
+			error=false;
+	}
+	
+	if(error==true)
+		throw new SinCupoClientesException("No hay cupos disponibles...");
+	
+}
+/**
+ * método que retorna el toString de un cliente usando su documento
+ * si el cliente no es encontrado se genera la excepción
+ * ClienteNoEncontradoException 
+ * @param documento
+ * @throws ClienteNoEncontradoException
+ */
+public void mostrarCliente(String documento) throws ClienteNoEncontradoException {
+	int posicion;
+	
+	String datosCliente="";
+	Cliente clienteAux=null;
+	posicion=obtenerPosicionCliente(documento);
+	
+	if(posicion!=-1)
+	{
+		datosCliente+=listaClientes[posicion].toString();
+		imprimirVentana(datosCliente);
+	}
+	else
+	{
+		throw new ClienteNoEncontradoException("El cliente no ha sido encontrado...");
+	}
+	
+}
+/**
+ * método que actualiza los datos de un cliente, el método
+ * encuentra al cliente usando el códigoAux.
+ * Si el cliente a actualizar no es encontrado, se genera
+ * un ClienteNoEncontradoException
+ * @param codigoAux
+ * @param documento
+ * @param nombre
+ * @param genero
+ * @param ciudadResidencia
+ * @param tipoDocumento
+ * @throws ClienteNoEncontradoException
+ */
+public void actualizarCliente(String codigoAux, String documento, String nombre, String genero,
+		String ciudadResidencia, int tipoDocumento) throws ClienteNoEncontradoException {
+	int posicion;
+	Cliente clienteAux=null;
+	posicion=obtenerPosicionCliente(codigoAux);
+	
+	if(posicion!=-1)
+	{
+		clienteAux= new Cliente(documento, nombre, genero, ciudadResidencia, tipoDocumento);
+		listaClientes[posicion]=clienteAux;
+		imprimirVentana("El cliente "+listaClientes[posicion].getNombre()+
+				" ha sido actualizado con exito.");
+	}
+	else
+	{
+		throw new ClienteNoEncontradoException("El cliente no ha sido encontrado...");
+	}
+	
+}
+/**
+ * método que elimina un empleado, se busca al empleado usando el
+ * codigo ingresado como parametro, si el empleado no es encontrado
+ * se genera un EmpleadoNoEncontradoException
+ * @param documento
+ * @throws ClienteNoEncontradoException 
+ */
+public void eliminarCliente(String documento) throws ClienteNoEncontradoException {
+	int posicion;
+	Cliente clienteAux=null;
+	posicion=obtenerPosicionCliente(documento);
+	
+	if(posicion!=-1)
+	{
+		listaClientes[posicion]=null;
+		imprimirVentana("El cliente con el documento :"+documento+
+				" ha sido eliminado con exito.");
+	}
+	else
+	{
+		throw new ClienteNoEncontradoException("El cliente no ha sido encontrado...");
+	}
+	
 }
 
 

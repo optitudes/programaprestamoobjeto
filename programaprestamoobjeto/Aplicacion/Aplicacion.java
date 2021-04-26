@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import co.edu.uniquindio.programaprestamoobjeto.excepciones.ClienteExisteException;
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.ClienteNoEncontradoException;
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.EmpleadoExisteException;
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.EmpleadoNoEncontradoException;
@@ -82,26 +83,81 @@ public class Aplicacion {
 							correo = leerString("Ingrese el correo del empleado: ");
 							aniosExperiencia = leerString("Ingrese los años de experiencia: ");
 							empresa.crearEmpleado(nombre,codigo,correo,aniosExperiencia);
+							break;
+						case 2:
+							empresa.imprimirEmpleadosRegistrados();
 							
+							codigo=leerString("Ingrese el código del empleado a mostrar :");
+							empresa.mostrarEmpleado(codigo);
+							break;
+						case 3:
+							empresa.imprimirEmpleadosRegistrados();
+							codigoAux=leerString("Ingrese el código del empleado a actualizar :");
+							nombre = leerString("Ingrese el nuevo nombre del empleado: ");
+							codigo = leerString("Ingrese el  nuevo codigo del empleado: ");
+							correo = leerString("Ingrese el  nuevo correo del empleado: ");
+							aniosExperiencia = leerString("Ingrese los  nuevos años de experiencia: ");
+							empresa.actualizarEmpleado(codigoAux,nombre,codigo,correo,aniosExperiencia);
+							break;
+						case 4:
+							empresa.imprimirEmpleadosRegistrados();
+							
+							codigo=leerString("Ingrese el código del empleado a eliminar :");
+							empresa.eliminarEmpleado(codigo);
+							break;
 					}
-					
 					
 
 					}while(opcion1!=5);
 					break;
 				case 2:
+					do {
+						mostrarMenuClientes();
+						opcion1 = leerEntero("Elija la opcion:");
+						switch(opcion1)
+						{
+							case 1:
+								empresa.verificarCupoCliente();
+								
+								documento=leerString("Ingrese el documento del cliente :");
+								nombre=leerString("Ingrese el nombre del cliente :");
+								genero=leerGenero("Ingrese el genero del cliente\n1: Masculino\n2: Femenino");
+								ciudadResidencia=leerString("Ingrese la ciudad de residencia del cliente :");
+								tipoDocumento=validarEntradaEntero(1, 3, "Ingrese el tipo de documento"+
+										"\n1: Cedula.\n2:Pasaporte.\n3:Cedula "+
+										"extranjera.");
+								empresa.crearCliente(documento,nombre,genero,ciudadResidencia,tipoDocumento);
+								break;
+							case 2:
+								empresa.imprimirClientesRegistrados();
+								
+								documento=leerString("Ingrese el documento del cliente a mostrar :");
+								empresa.mostrarCliente(documento);
+								break;
+							case 3:
+								empresa.imprimirClientesRegistrados();
+								
+								codigoAux=leerString("Ingrese el documento del cliente a actualizar :");
+								documento=leerString("Ingrese el  nuevo documento del cliente :");
+								nombre=leerString("Ingrese el nuevo nombre del cliente :");
+								genero=leerGenero("Ingrese el  nuevo genero del cliente\n1: Masculino\n2: Femenino");
+								ciudadResidencia=leerString("Ingrese la  nueva ciudad de residencia del cliente :");
+								tipoDocumento=validarEntradaEntero(1, 3, "Ingrese el tipo de documento"+
+										"\n1: Cedula.\n2:Pasaporte.\n3:Cedula "+
+										"extranjera.");
+								empresa.actualizarCliente(codigoAux,documento,nombre,genero,ciudadResidencia,tipoDocumento);
+								break;
+							case 4:
+								empresa.imprimirClientesRegistrados();
+								
+								documento=leerString("Ingrese el documento del cliente a eliminar :");
+								empresa.eliminarCliente(documento);
+								break;
+						}
+						
 
-
-					documento=leerString("Ingrese el documento del cliente :");
-					nombre=leerString("Ingrese el nombre del cliente :");
-					genero=leerGenero("Ingrese el genero del cliente\n1: Masculino\n2: Femenino");
-					ciudadResidencia=leerString("Ingrese la ciudad de residencia del cliente :");
-					tipoDocumento=validarEntradaEntero(1, 3, "Ingrese el tipo de documento"+
-							"\n1: Cedula.\n2:Pasaporte.\n3:Cedula "+
-							"extranjera.");
-					empresa.crearCliente(documento,nombre,genero,ciudadResidencia,tipoDocumento);
-
-					break;
+						}while(opcion1!=5);
+						break;
 
 				case 3:
 					do{
@@ -277,7 +333,7 @@ public class Aplicacion {
 					| SinClientesRegistradosException | ClienteNoEncontradoException | SinCupoEmpleadoException 
 					| SinEmpleadosRegistradosException | EmpleadoNoEncontradoException | SinCupoPrestamoException | SinCupoDetallePrestamo 
 					| SinCantidadDisponibleException | ObjetoNoDisponibleException | PrestamoNoEncontradoException | SinObjetosPrestadosException 
-					| SinPrestamosRegistradosException | EmpleadoExisteException e) {
+					| SinPrestamosRegistradosException | EmpleadoExisteException | ClienteExisteException e) {
 				imprimirVentanaError(e.getMessage());
 			}
 		}while (opcion != 6);
@@ -377,12 +433,11 @@ private static String validarEstadoObjeto(String mensaje) {
  */
 	private static void mostrarMenu() {
 		System.out.println("1-Administrar empleados.");
-		System.out.println("2-Crear clientes.");
+		System.out.println("2-Administrar clientes.");
 		System.out.println("3-Administrar objectos.");
 		System.out.println("4-Administrar prestamos.");
 		System.out.println("5-Reportes.");
-		System.out.println("6-Menus crud.");
-		System.out.println("7-Salir.");
+		System.out.println("6-Salir.");
 
 	}
 /**
@@ -393,6 +448,16 @@ private static String validarEstadoObjeto(String mensaje) {
 		System.out.println("2-Mostrar empleado.");
 		System.out.println("3-Actualizar empleado.");
 		System.out.println("4-Eliminar empleado.");
+		System.out.println("5-menú principal.");
+	}
+	/**
+	 * imprime el menú crud de empleados
+	 */
+	private static void mostrarMenuClientes() {
+		System.out.println("1-Crear cliente.");
+		System.out.println("2-Mostrar cliente.");
+		System.out.println("3-Actualizar cliente.");
+		System.out.println("4-Eliminar cliente.");
 		System.out.println("5-menú principal.");
 	}
 

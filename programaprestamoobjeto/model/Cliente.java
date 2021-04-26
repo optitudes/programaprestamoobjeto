@@ -24,12 +24,13 @@ public class Cliente {
 	 * @param tipoDocumento
 	 */
 	public Cliente(String documento, String nombre, String genero, String ciudadRecidencia,
-			TipoDocumento tipoDocumento) {
+			int tipoDocumento) {
+		
 		this.documento = documento;
-		this.nombre = nombre;
-		this.genero = genero;
+		this.nombre    = nombre;
+		this.genero    = genero;
 		this.ciudadRecidencia = ciudadRecidencia;
-		this.tipoDocumento = tipoDocumento;
+		this.tipoDocumento    = definirTipoDocumento(tipoDocumento);
 	}
 	/**
 	 * getters y setters de la clase 
@@ -76,24 +77,24 @@ public class Cliente {
 		// TODO Auto-generated method stub
 		
 	}
-	public void definirTipoDocumento(int tipoDocumento) {
+	public TipoDocumento definirTipoDocumento(int tipoDocumento) {
 		TipoDocumento tipoDocumentoAux=null;
 		if(tipoDocumento==TipoDocumento.CEDULA.getNumTipo())
 		{
 			tipoDocumentoAux=TipoDocumento.CEDULA;
-			setTipoDocumento(tipoDocumentoAux);
+			return tipoDocumentoAux;
 		}
 		else
 		{
 			if(tipoDocumento==TipoDocumento.PASAPORTE.getNumTipo())
 			{
 				tipoDocumentoAux=TipoDocumento.PASAPORTE;
-				setTipoDocumento(tipoDocumentoAux);
+				return tipoDocumentoAux;
 			}
 			else
 			{
 				tipoDocumentoAux=TipoDocumento.CEDULA_EXTRANJERA;
-				setTipoDocumento(tipoDocumentoAux);
+				return tipoDocumentoAux;
 			}
 				
 		}
