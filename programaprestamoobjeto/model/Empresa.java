@@ -45,6 +45,10 @@ public class Empresa {
 	 * método constructor de la clase empresa
 	 * @param nombre
 	 * @param nit
+	 * @param numeroClientes
+	 * @param numeroEmpleados
+	 * @param numeroPrestamos
+	 * @param numeroObjetos
 	 */
 	public Empresa(String nombre, String nit,int numeroClientes,int numeroEmpleados,
 					int numeroPrestamos,int numeroObjetos) {
@@ -163,6 +167,34 @@ public class Empresa {
 			{
 				documentoCliente=clienteAux.getDocumento();
 				if(documentoCliente.equalsIgnoreCase(documento))
+				{
+					posicion=i;
+					encontrado=true;
+				}
+			}
+			
+		}
+		return posicion;
+	}
+	/**
+	 * método que busca la posicion de un prestamo usando su codigo
+	 * si el prestamo no es encontrado se retorna -1
+	 * @param codigo
+	 * @return posicion
+	 */
+	private int obtenerPosicionPrestamo(String codigo) {
+		int      posicion=-1;
+		String   codigoPrestamo="";
+		boolean  encontrado=false;
+		Prestamo prestamoAux=null;
+		
+		for (int i=0;i<listaPrestamos.length && !encontrado; i++) {
+			prestamoAux=listaPrestamos[i];
+			
+			if(prestamoAux!=null)
+			{
+				codigoPrestamo=prestamoAux.getCodigo();
+				if(codigoPrestamo.equalsIgnoreCase(codigo))
 				{
 					posicion=i;
 					encontrado=true;
@@ -794,38 +826,30 @@ public class Empresa {
 			}
 		}
 	}
+	/**
+	 * método que obtiene un prestamo usando su código
+	 * si el prestamo no es encontrado se genera un
+	 * PrestamoNoEncontradoException
+	 * @param codigoPrestamoBuscar
+	 * @return prestamoAux
+	 * @throws PrestamoNoEncontradoException
+	 */
 	private Prestamo obtenerPrestamo(String codigoPrestamoBuscar) throws PrestamoNoEncontradoException {
 		Prestamo prestamoAux=null;
 		String   codigoPrestamo;
-		if(prestamo1!=null)
+		int posicion;
+		posicion=obtenerPosicionPrestamo(codigoPrestamoBuscar);
+		if(posicion!=-1)
 		{
-			codigoPrestamo=prestamo1.getCodigo();
-			if(codigoPrestamo.equalsIgnoreCase(codigoPrestamoBuscar))
-			{
-				prestamoAux=prestamo1;
-				return prestamoAux;
-			}
+			prestamoAux=listaPrestamos[posicion];
+			return prestamoAux;
 		}
-		if(prestamo2!=null)
+		else
 		{
-			codigoPrestamo=prestamo2.getCodigo();
-			if(codigoPrestamo.equalsIgnoreCase(codigoPrestamoBuscar))
-			{
-				prestamoAux=prestamo2;
-				return prestamoAux;
-			}
+			throw new PrestamoNoEncontradoException("El código ingresado no coincide con ningún "+
+					"prestamo registrado");
 		}
-		if(prestamo3!=null)
-		{
-			codigoPrestamo=prestamo3.getCodigo();
-			if(codigoPrestamo.equalsIgnoreCase(codigoPrestamoBuscar))
-			{
-				prestamoAux=prestamo3;
-				return prestamoAux;
-			}
-		}
-		throw new PrestamoNoEncontradoException("El código ingresado no coincide con ningún "+
-												"prestamo registrado");
+		
 	}
 	/**
 	 * método que disminuye la cantidad de unidades disponibles
@@ -2279,7 +2303,43 @@ public void eliminarCliente(String documento) throws ClienteNoEncontradoExceptio
 	
 }
 
+public String obtenerObjetosPrestadosPrecioMayor(double precioMayor)
+{
+	String objetosPrestados="";
+	String auxiliar="";
+	for(int i=0;i<listaPrestamos.length;i++)
+	{
+		if(listaPrestamos!=null)
+		{
+			auxiliar=listaPrestamos[i].obtenerObjetosPrestadosPrecioMayor(precioMayor);
+			if(!auxiliar.isEmpty())
+			{
+				objetosPrestados+=auxiliar;
+			}
+		}
+	}
+	return objetosPrestados;
+}
+/**
+ * método que calcula la cantidad de unidades prestadas de un prestamo,
+ * 
+ * @param codigo
+ * @return cantidadUnidadesPrestadas
+ * @throws PrestamoNoEncontradoException
+ * @throws SinObjetosPrestadosException 
+ */
+public int retornarCantidadUnidadesPrestadas(String codigo) throws PrestamoNoEncontradoException, SinObjetosPrestadosException
+{	
+	int cantidadUnidadesPrestadas=0;
+	Prestamo prestamoAux=null;
+	prestamoAux=obtenerPrestamo(codigo);
+	cantidadUnidadesPrestadas=prestamoAux.obtenerCantidadUnidadesPrestadas();
+	if(cantidadUnidadesPrestadas==0)
+	{
+		throw new SinObjetosPrestadosException("El prestamo no posee objetos prestados...");
+	}
 
  
-
+return cantidadUnidadesPrestadas;
+}
 }

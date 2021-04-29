@@ -22,8 +22,8 @@ public class Prestamo {
 	
 	private Empleado empleado=null;
 	
-	private DetallePrestamo detallePrestamo1=null;
-	private DetallePrestamo detallePrestamo2=null;
+	private DetallePrestamo[] listaDetallesPrestamos;
+	
 	
 	/**
 	 * método constructor de la clase prestamo
@@ -104,7 +104,7 @@ public class Prestamo {
 	 * @param nombreObjeto
 	 * @return cantidadUnidadesPrestadas
 	 */
-	public int obtenerCantidadUnidadesPrestadas(String nombreObjeto) {
+	public int obtenerCantidadUnidadesPrestadasObjeto(String nombreObjeto) {
 		int cantidadUnidadesPrestadas=0;
 		if(detallePrestamo1!=null)
 		{
@@ -509,6 +509,40 @@ public class Prestamo {
         objetos+=" la cantidad de objetos prestados por el cliente  y de tipo electrodomesticos es :"+cantidadObjetos;
         return objetos;
     }
+	public String obtenerObjetosPrestadosPrecioMayor(double precioMayor) {
+		String objetosPrestados="";
+		String auxiliar="";
+		for(int i=0;i<listaDetallesPrestamos.length;i++)
+		{
+			if(listaDetallesPrestamos!=null)
+			{
+				auxiliar=listaDetallesPrestamos[i].obtenerObjetosPrestadosPrecioMayor(precioMayor);
+				if(!auxiliar.isEmpty())
+				{
+					objetosPrestados+=auxiliar;
+				}
+			}
+		}
+		return objetosPrestados;
+	}
+	/**
+	 *método que obtiene el total de las unidades prestadas de un prestamo sin
+	 *importar el objeto
+	 * @param 
+	 * @return
+	 */
+	public int obtenerCantidadUnidadesPrestadas() {
+		int cantidadTotal=0;
+		
+		for(int i=0;i<listaDetallesPrestamos.length;i++)
+		{
+			if(listaDetallesPrestamos[i]!=null)
+			{
+				cantidadTotal+=listaDetallesPrestamos[i].getUnidadesPrestadas();
+			}
+		}
+		return cantidadTotal;
+	}
 
 
 }

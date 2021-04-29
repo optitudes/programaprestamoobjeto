@@ -158,6 +158,18 @@ public class Objeto {
 		
 		
 	}
+	/**
+	 * método que verifica si el precio del alquiler es mayor al
+	 * precio mayor,
+	 * @param precioMayor
+	 * @return esMayor
+	 */
+	public boolean validarPrecioMayor(double precioMayor) {
+		boolean esMayor=false;
+		if(precioAlquiler>precioMayor)
+			esMayor=true;
+		return esMayor;
+	}
 
 	
 	

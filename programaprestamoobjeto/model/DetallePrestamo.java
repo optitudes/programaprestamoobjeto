@@ -68,7 +68,7 @@ public class DetallePrestamo {
 	 * @param nombre
 	 * @return unidades prestadas
 	 */
-	public int obtenerUnidadesPrestadas(String nombre) {
+	public int obtenerUnidadesPrestadasObjeto(String nombre) {
 		int unidadesPrestadas=0;
 		String nombreObjeto="";
 		if(objeto!=null)
@@ -200,5 +200,17 @@ public class DetallePrestamo {
     	}
     	return unidadesPrestadas;
     }
-
+	public String obtenerObjetosPrestadosPrecioMayor(double precioMayor) {
+		boolean encontrado=false;
+		String  datosObjeto="";
+		if(objeto!=null)
+		{
+			encontrado=objeto.validarPrecioMayor(precioMayor);
+			if(encontrado)
+			{
+				datosObjeto+=objeto.toString();
+			}
+		}
+		return datosObjeto;	
+	}
 }
