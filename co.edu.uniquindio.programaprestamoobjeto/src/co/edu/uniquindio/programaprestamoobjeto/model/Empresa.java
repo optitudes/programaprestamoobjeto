@@ -14,8 +14,6 @@ import co.edu.uniquindio.programaprestamoobjeto.excepciones.PrestamoNoEncontrado
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.SinCantidadDisponibleException;
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.SinClientesRegistradosException;
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.SinCupoDetallePrestamo;
-import co.edu.uniquindio.programaprestamoobjeto.excepciones.SinCupoEmpleadoException;
-import co.edu.uniquindio.programaprestamoobjeto.excepciones.SinCupoObjetoException;
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.SinCupoPrestamoException;
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.SinEmpleadosRegistradosException;
 import co.edu.uniquindio.programaprestamoobjeto.excepciones.SinObjetosPrestadosException;
@@ -190,8 +188,8 @@ public class Empresa {
 		boolean  encontrado=false;
 		Prestamo prestamoAux=null;
 
-		for (int i=0;i<listaPrestamos.length && !encontrado; i++) {
-			prestamoAux=listaPrestamos[i];
+		for (int i=0;i<listaPrestamos.size() && !encontrado; i++) {
+			prestamoAux=listaPrestamos.get(i);
 
 			if(prestamoAux!=null)
 			{
@@ -240,37 +238,16 @@ public class Empresa {
 	 * @param tipoObjeto
 	 * @throws SinCupoObjetoException
 	 */
-	public void crearObjeto(String nombre, String codigo, int unidadesDisponibles, String estado,
-			double precioAlquiler, int tipoObjeto) throws SinCupoObjetoException {
-		if(objeto1==null)
-		{
-			objeto1=new Objeto(nombre,codigo,estado,unidadesDisponibles,precioAlquiler,null);
-			objeto1.definirTipoObjeto(tipoObjeto);
-			imprimirVentana("Objeto :"+objeto1.getNombre()+" creado con éxito");
-		}
-		else
-		{
-			if(objeto2==null)
-			{
-				objeto2=new Objeto(nombre,codigo,estado,unidadesDisponibles,precioAlquiler,null);
-				objeto2.definirTipoObjeto(tipoObjeto);
-				imprimirVentana("Objeto :"+objeto2.getNombre()+" creado con éxito");
-			}
-			else
-			{
-				if(objeto3==null)
-				{
-					objeto3=new Objeto(nombre,codigo,estado,unidadesDisponibles,precioAlquiler,null);
-					objeto3.definirTipoObjeto(tipoObjeto);
-					imprimirVentana("Objeto :"+objeto3.getNombre()+" creado con éxito");
-				}
-				else
-				{
-					throw new SinCupoObjetoException("No hay cupos disponibles para crear más objetos.");
+	public void crearObjeto(String nombre, String codigo, String descripción, String color,String estado,
+			int unidadesDisponibles, double valorUnitario, double peso, double valorAlquiler, int tipoObjeto) {
 
-				}
-			}
-		}
+		 Objeto  objetoAux;
+		 int     posicion;
+		 objetoAux=new Objeto(nombre, codigo, descripción, color, estado,
+			                  unidadesDisponibles, valorUnitario, peso, valorAlquiler, tipoObjeto);
+		 listaObjetos.add(objetoAux);
+		 posicion=listaObjetos.size()-1;
+		 imprimirVentana("Objeto :"+listaObjetos.get(posicion).getNombre()+" creado con éxito");
 	}
 	/**
 	 * Metodo que consulta los datos de un objeto mediante el codigo se invoca verificarCodigo(codigo)
@@ -280,25 +257,18 @@ public class Empresa {
 	 */
 	public void consultarDatosObjeto (String codigo) throws ObjetoNoEncontradoException{
 		boolean objetoEncontrado=false;
-		if(objeto1!=null)
+		Objeto objetoAux;
+		
+		for(int i=0;i<listaObjetos.size() && !objetoEncontrado;i++)
 		{
-			if(objeto1.verificarCodigo(codigo)==true) {
-				imprimirVentana(objeto1.toString());
-				objetoEncontrado=true;
-			}
-		}
-		if(objeto2!=null)
-		{
-			if(objeto2.verificarCodigo(codigo)==true){
-				imprimirVentana(objeto2.toString());
-				objetoEncontrado=true;
-			}
-		}
-		if(objeto3!=null)
-		{
-			if(objeto3.verificarCodigo(codigo)==true){
-				imprimirVentana(objeto3.toString());
-				objetoEncontrado=true;
+			objetoAux=listaObjetos.get(i);
+			if(objetoAux!=null)
+			{
+				if(objetoAux.verificarCodigo(codigo))
+				{
+					imprimirVentana(objetoAux.toString());
+					objetoEncontrado=true;
+				}
 			}
 		}
 		if(objetoEncontrado==false)
