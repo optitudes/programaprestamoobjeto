@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+/home/michky/Escritorio/archivos uniquindio/semestre iii/programación en java/prestamoobjetos/programaprestamoobjeto/.metadata/.plugins/org.eclipse.jdt.core
+744405997.index
+4233140605.index
