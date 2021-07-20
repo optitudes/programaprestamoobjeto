@@ -16,9 +16,10 @@ public class DetallePrestamo {
 	 * @param unidadesPrestadas
 	 * @param subTotal
 	 */
-	public DetallePrestamo(int unidadesPrestadas, double subTotal) {
+	public DetallePrestamo(int unidadesPrestadas, Objeto objetoAux){
 		this.unidadesPrestadas = unidadesPrestadas;
-		this.subTotal = subTotal;
+		this.objeto=objetoAux;
+		this.subTotal = calcularSubtotal();
 	}
 	/**
 	 * getters y setters de la clase detalle prestamo
@@ -89,19 +90,7 @@ public class DetallePrestamo {
     public int darUnidadesDisponibles() {
         return objeto.getUnidadesDisponibles();
     }
-    /**
-     * Metodo para dar el subtotal del prestamo a realizar
-     * @return subtotal
-     */
-    public double calcularTotal(){
-        double resultado;
-        double precioAlquiler;
-        int    unidadesPrestadas;
-        precioAlquiler=objeto.getPrecioAlquiler();
-        unidadesPrestadas=this.unidadesPrestadas;
-        resultado=precioAlquiler*unidadesPrestadas;     		
-        return resultado;
-    }
+    
 	public void setObjeto(Objeto objetoAux) {
 		this.objeto=objetoAux;
 		
@@ -115,7 +104,7 @@ public class DetallePrestamo {
 		double precioAlquiler;
 		int    unidadesPrestadas;
 		double resultado;
-		precioAlquiler=objeto.getPrecioAlquiler();
+		precioAlquiler=objeto.getValorUnitario();
 		unidadesPrestadas=this.unidadesPrestadas;
 		resultado=unidadesPrestadas*precioAlquiler;
 		return resultado;
@@ -125,26 +114,8 @@ public class DetallePrestamo {
 		codigoObjeto=objeto.getCodigo();
 		return codigoObjeto;
 	}
-	/**
-	 * método que calcula el subtotal de un objeto con retraso
-	 * @return
-	 */
-	public double getSubTotalRetraso() {
-		
-		double valorProducto;
-		double valorIncremento;
-		int    cantidad;
-		double resultado;
-		
-		cantidad=this.unidadesPrestadas;
-		valorProducto=objeto.getPrecioAlquiler();
-		valorIncremento=valorProducto*0.7;
-		valorProducto+=valorIncremento;
-		resultado=valorProducto*cantidad;
-		return resultado;
-	}
 
-	/**Punto 1
+	/**
      * Metodo que verifica si el objeto está asociado al detalle prestamo
      *  para comparar el codigo del objeto debe usar el equals()
      * @param codigoObjeto
@@ -162,55 +133,4 @@ public class DetallePrestamo {
         return encontro;
     }
 
-
-	
-
-    /**Punto 2
-     * Este metodo verifica si las unidades
-     *  prestadas estan en el rango mayor igual 5 a 15 unidades
-     * @return cumple Rango
-     */
-    public boolean verificarRangoUnidades() {
-    	int     unidadesPrestadas;
-    	boolean cumpleRango=false;
-    	
-    	unidadesPrestadas=this.unidadesPrestadas;
-    	
-    	if(unidadesPrestadas>=5 && unidadesPrestadas<15)
-    		cumpleRango=true;
-    	
-    	return cumpleRango;
-    }
-
-    /**Punto 3.b
-     * Este metodo retorna las unidades prestadas si
-     * el objeto es del tipo indicado de lo contrario retorna cero.
-     * @param tipoObjeto
-     * @return
-     */
-    public int consutarUnidadesPrestadas(TipoObjeto tipoObjeto) {
-    	int unidadesPrestadas=0;
-    	TipoObjeto tipoObjetoRegistrado=null;
-    	
-    	tipoObjetoRegistrado=objeto.getTipoObjeto();
-    	
-    	if(tipoObjetoRegistrado==tipoObjeto)
-    	{
-    		unidadesPrestadas+=this.unidadesPrestadas;
-    	}
-    	return unidadesPrestadas;
-    }
-	public String obtenerObjetosPrestadosPrecioMayor(double precioMayor) {
-		boolean encontrado=false;
-		String  datosObjeto="";
-		if(objeto!=null)
-		{
-			encontrado=objeto.validarPrecioMayor(precioMayor);
-			if(encontrado)
-			{
-				datosObjeto+=objeto.toString();
-			}
-		}
-		return datosObjeto;	
-	}
 }

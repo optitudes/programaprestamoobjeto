@@ -242,8 +242,7 @@ public class Empresa {
 
 		 Objeto  objetoAux;
 		 int     posicion;
-		 objetoAux=new Objeto(nombre, codigo, descripción, color, estado,
-			                  unidadesDisponibles, valorUnitario, peso, valorAlquiler, tipoObjeto);
+		 objetoAux=new Objeto(nombre, codigo, descripción, color, estado, unidadesDisponibles, valorUnitario, peso, tipoObjeto);
 		 listaObjetos.add(objetoAux);
 		 posicion=listaObjetos.size()-1;
 		 imprimirVentana("Objeto :"+listaObjetos.get(posicion).getNombre()+" creado con éxito");
@@ -415,39 +414,7 @@ public class Empresa {
 		}
 		return existeObjeto;
 	}
-	/**
-	 * método que imprime la cantidad total de unidades prestadas
-	 * por cada objeto
-	 */
-	public void imprimirTotalUnidadesPrestadasPorObjeto() {
-		ArrayList<String>  listaTotalNombresObjetos=new ArrayList<>();
-		int totalAux;
-		int k=0;
-		int totalObjeto1=0;
-		int totalObjeto2=0;
-		int totalObjeto3=0;
-		String nombreObjeto1="";
-		String nombreObjeto2="";
-		String nombreObjeto3="";
-		String respuesta="";
-		
-		for(Objeto objetoAux: listaObjetos)
-		{
-			listaTotalNombresObjetos.add(objetoAux.getNombre());
-		}
-		for(String nombreAux:listaTotalNombresObjetos)
-		{
-				totalAux=0;
-				for(Prestamo prestamoAux:listaPrestamos)
-				{
-					totalAux+=prestamoAux.obtenerCantidadUnidadesPrestadasObjeto(nombreAux);
-				}
-				respuesta+=generarMensajeUnidadesPrestadas(nombreAux,totalAux);
-				k++;
-		}
-		
-		imprimirVentana(respuesta);
-	}
+	
 	/**
 	 * método que genera un string con el nombre del objeto y
 	 * la cantidad total de unidades prestadas del mismo
@@ -504,9 +471,7 @@ public class Empresa {
 			{
 				if(!verificarExitenciaObjeto(codigo))
 				{
-					objetoAux= new Objeto(nombre, codigo, codigoAux, codigoObjeto,
-							              estado, unidadesDisponibles, valorUnitario
-							              , peso, valorAlquiler, tipoObjeto);
+					objetoAux= new Objeto(nombre, codigoObjeto, descripción, color, estado, unidadesDisponibles, valorUnitario, peso, tipoObjeto); 
 					listaObjetos.set(i, objetoAux);
 					imprimirVentana(listaObjetos.get(i).toString()+"\n"
 						 	        + "¡Actualización exitosa!");
@@ -533,46 +498,17 @@ public class Empresa {
      * @throws SinCupoPrestamo (ya que solo se pueden crear 3 prestamos)
      */
 
-	public void crearPrestamo(String codigo,int diasSolicitados,int diasTranscurridos,double valor,
+	public void crearPrestamo(String codigoPrestamo,int diasSolicitados,int diasTranscurridos,double valor,
 							 int unidadesPrestadas,Cliente clienteAux, Empleado empleadoAux,
-							 Objeto objetoAux)throws SinCantidadDisponibleException, ObjetoNoEncontradoException, PrestamoNoEncontradoException
+							 Objeto objetoAux)throws ObjetoNoEncontradoException, PrestamoNoEncontradoException
 	{
 		Prestamo prestamoAux;
 		String codigoObjeto;
-		String codigoPrestamo;
+		String codigoPrestamoaUX;
 		boolean error = true;
 
-		prestamoAux= new Prestam
-		if(prestamo1==null){
-
-			prestamo1= new Prestamo(codigo, diasSolicitados, diasTranscurridos, valor,clienteAux,empleadoAux);
-			codigoPrestamo=prestamo1.getCodigo();
-			prestamo1=crearOActualizarDetallePrestamo(codigoPrestamo,unidadesPrestadas,objetoAux);
-			error=false;
-
-		}
-		else
-		{asdfasdf
-			if(prestamo2==null){
-
-				prestamo2= new Prestamo(codigo, diasSolicitados, diasTranscurridos, valor,clienteAux,empleadoAux);
-				codigoPrestamo=prestamo2.getCodigo();
-				prestamo2=crearOActualizarDetallePrestamo(codigoPrestamo,unidadesPrestadas,objetoAux);
-				error=false;
-			}
-			else
-			{
-				if(prestamo3==null){
-
-					prestamo3= new Prestamo(codigo, diasSolicitados, diasTranscurridos, valor,clienteAux,empleadoAux);
-					codigoPrestamo=prestamo3.getCodigo();
-					prestamo3=crearOActualizarDetallePrestamo(codigoPrestamo,unidadesPrestadas,objetoAux);
-					error=false;
-				}
-			}
-		}
-		if(error==true)
-			throw new SinCupoPrestamoException("No hay cupos disponibles para crear más Prestamos");
+		prestamoAux= new Prestamo(codigoPrestamo, null, null, valor, valor, clienteAux, empleadoAux);
+		listaPrestamos.add(prestamoAux);
     }
 	/**
 	 * método que crea un detalle Prestamo
@@ -598,24 +534,37 @@ public class Empresa {
 		int      unidadesDisponibles;
 		double   valor;
 		String   codigoObjeto;
+			int posicion;
+			posicion=obtenerPosicionPrestamo(codigoPrestamo);
+			if(posicion==-1)
+			{
+				empleadoAux= new Empleado(aniosExperiencia, nombre, aniosExperiencia, aniosExperiencia,
+						codigoAux, nombre, codigo, aniosExperiencia, correo, posicion, posicion);
+				listaEmpleados.set(posicion, empleadoAux);
+				imprimirVentana("El empleado "+listaEmpleados.get(posicion).getNombre()+
+						" ha sido actualizado con exito.");
+			}
+			else
+			{
+				throw new EmpleadoNoEncontradoException("El empleado no ha sido encontrado...");
+			}
 
+}
 		prestamoAux=obtenerPrestamo(codigoPrestamo);
 		valor=prestamoAux.getValor();
-		diasSolicitados=prestamoAux.getDiasSolicitados();
-		diasTranscurridos=prestamoAux.getDiasTranscurridos();
 		unidadesDisponibles=objetoAux.getUnidadesDisponibles();
 
 
 		if(unidadesDisponibles>=unidadesPrestadas==true)
 		{
 			prestamoAux.crearOActualizarDetallePrestamo(unidadesPrestadas,valor,objetoAux);
-			valor = prestamoAux.calcularValor(diasSolicitados,diasTranscurridos);
-			setValorPrestamo(codigoPrestamo,valor);
+			prestamoAux.actualizarValorPrestamo();
 			reducirUnidadesDisponiblesObjeto(objetoAux,unidadesPrestadas);
 			codigoObjeto=objetoAux.getCodigo();
 			objetoAux=obtenerObjeto(codigoObjeto);
 			setObjetoDetallePrestamo(codigoPrestamo,objetoAux);
-			imprimirVentana("Prestamo :"+prestamo1.getCodigo()+" creado o actualizado con éxito");
+			
+			imprimirVentana("Prestamo :"+prestamoAux.getCodigo()+" creado o actualizado con éxito");
 		}
 		else
 		{
@@ -1083,63 +1032,7 @@ public class Empresa {
 		mensaje=prestamoAux.toString();
 		imprimirVentana(mensaje);
 	}
-	public void entregaPrestamo(String codigoPrestamo, int diasTranscurridos) throws PrestamoNoEncontradoException
-								, ObjetoNoEncontradoException {
-		String mensaje="";
-
-		Objeto objetoAux1=null;
-		Objeto objetoAux2=null;
-
-		Prestamo prestamoAux=null;
-
-		int      diasSolicitados;
-		int      unidadesPrestadasDetalle1=0;
-		int      unidadesPrestadasDetalle2=0;
-		int      numeroDetallePrestamo=1;
-
-		String   codigoObjeto1="";
-		String   codigoObjeto2="";
-
-		double costo;
-		prestamoAux=obtenerPrestamo(codigoPrestamo);
-
-		diasSolicitados=prestamoAux.getDiasSolicitados();
-
-		unidadesPrestadasDetalle1=prestamoAux.getunidadesPrestadasDetalle(numeroDetallePrestamo);
-		codigoObjeto1=prestamoAux.obtenerCodigoObjeto(numeroDetallePrestamo);
-		numeroDetallePrestamo++;
-		unidadesPrestadasDetalle2=prestamoAux.getunidadesPrestadasDetalle(numeroDetallePrestamo);
-		codigoObjeto2=prestamoAux.obtenerCodigoObjeto(numeroDetallePrestamo);
-		costo=prestamoAux.calcularValor(diasSolicitados, diasTranscurridos);
-		setValorPrestamo(codigoPrestamo, costo);
-		if(!codigoObjeto1.isEmpty())
-		{
-			objetoAux1=obtenerObjeto(codigoObjeto1);
-			incrementarUnidadesDisponiblesObjeto(objetoAux1,unidadesPrestadasDetalle1);
-			codigoObjeto1=objetoAux1.getCodigo();
-			objetoAux1=obtenerObjeto(codigoObjeto1);
-			setObjetoDetallePrestamo(codigoPrestamo, objetoAux1);
-
-
-		}
-		if(!codigoObjeto2.isEmpty())
-		{
-			objetoAux2=obtenerObjeto(codigoObjeto2);
-			incrementarUnidadesDisponiblesObjeto(objetoAux2,unidadesPrestadasDetalle2);
-			codigoObjeto2=objetoAux2.getCodigo();
-			objetoAux2=obtenerObjeto(codigoObjeto2);
-			prestamoAux.setObjetoDetallePrestamo(objetoAux2);
-			setObjetoDetallePrestamo(codigoPrestamo, objetoAux2);
-		}
-
-		setDiasTranscurridosPrestamo(codigoPrestamo,diasTranscurridos);
-		prestamoAux=obtenerPrestamo(codigoPrestamo);
-
-		costo=prestamoAux.getValor();
-		mensaje=prestamoAux.toString();
-		imprimirVentana(mensaje);
-
-	}
+	
 	/**
 	 * método que setea la cantidad de dias transcurridos a un prestamo
 	 * @param codigoPrestamo
@@ -1212,346 +1105,7 @@ public class Empresa {
 		}
 
 	}
-	/**
-	 * método que imprime  el nombre y la cantidad de prestamos
-	 * de cada empleado registrado
-	 * @throws SinEmpleadosRegistradosException
-	 */
-	public void imprimirCantidadPrestamosEmpleados() throws SinEmpleadosRegistradosException {
-		int cantidadPrestamosEmpleado1;
-		int cantidadPrestamosEmpleado2;
-		int cantidadPrestamosEmpleado3;
-		int posicion=1;
-		String nombreEmpleado1="";
-		String nombreEmpleado2="";
-		String nombreEmpleado3="";
-		String mensaje="";
 
-
-		if(empleado1!=null)
-		{
-			nombreEmpleado1=empleado1.getNombre();
-		}
-		if(empleado2!=null)
-		{
-			nombreEmpleado2=empleado2.getNombre();
-		}
-		if(empleado3!=null)
-		{
-			nombreEmpleado3=empleado3.getNombre();
-		}
-
-		if(!nombreEmpleado1.isEmpty())
-		{
-			cantidadPrestamosEmpleado1=obtenerCantidadPrestamosEmpleado(nombreEmpleado1);
-			mensaje+=posicion+" nombre Empleado: "+nombreEmpleado1+" cantidad de prestamos a los que pertenece :"+
-					 cantidadPrestamosEmpleado1+"\n";
-			posicion++;
-		}
-		if(!nombreEmpleado2.isEmpty())
-		{
-			cantidadPrestamosEmpleado2=obtenerCantidadPrestamosEmpleado(nombreEmpleado2);
-			mensaje+=posicion+" nombre Empleado: "+nombreEmpleado2+" cantidad de prestamos a los que pertenece :"+
-					 cantidadPrestamosEmpleado2+"\n";
-			posicion++;
-		}
-		if(!nombreEmpleado3.isEmpty())
-		{
-			cantidadPrestamosEmpleado3=obtenerCantidadPrestamosEmpleado(nombreEmpleado3);
-			mensaje+=posicion+" nombre Empleado: "+nombreEmpleado3+" cantidad de prestamos a los que pertenece :"+
-					 cantidadPrestamosEmpleado3+"\n";
-		}
-
-		if(mensaje.isEmpty())
-			throw new SinEmpleadosRegistradosException("No hay empleados registrados...");
-		imprimirVentana(mensaje);
-
-
-
-
-	}
-	/**
-	 * método que obtiene la cantiddad de prestamos a los que pertenece
-	 * un empleado
-	 * @param nombreEmpleado
-	 * @return
-	 */
-	private int obtenerCantidadPrestamosEmpleado(String nombreEmpleado) {
-		int cantidadPrestamos=0;
-		boolean pertenecePrestamo=false;
-		if(prestamo1!=null)
-		{
-			pertenecePrestamo=prestamo1.verificarEmpleadoNombre(nombreEmpleado);
-			if(pertenecePrestamo==true)
-			{
-				cantidadPrestamos++;
-				pertenecePrestamo=false;
-			}
-		}
-		if(prestamo2!=null)
-		{
-			pertenecePrestamo=prestamo2.verificarEmpleadoNombre(nombreEmpleado);
-			if(pertenecePrestamo==true)
-			{
-				cantidadPrestamos++;
-				pertenecePrestamo=false;
-			}
-		}
-		if(prestamo3!=null)
-		{
-			pertenecePrestamo=prestamo3.verificarEmpleadoNombre(nombreEmpleado);
-			if(pertenecePrestamo==true)
-			{
-				cantidadPrestamos++;
-				pertenecePrestamo=false;
-			}
-		}
-		return cantidadPrestamos;
-	}
-	public void mostrarDatosEmpleadoMasUnidadesPrestadas() throws SinEmpleadosRegistradosException, SinObjetosPrestadosException {
-		int cantidadUnidadesPrestadasEmpleado1=0;
-		int cantidadUnidadesPrestadasEmpleado2=0;
-		int cantidadUnidadesPrestadasEmpleado3=0;
-
-
-		String codigoEmpleado1="";
-		String codigoEmpleado2="";
-		String codigoEmpleado3="";
-		String mensaje="";
-
-		Empleado empleadoAux=null;
-		if(empleado1==null && empleado2==null && empleado3==null)
-			throw new SinEmpleadosRegistradosException("No hay empleados registrados...");
-
-		if(empleado1!=null)
-		{
-			codigoEmpleado1=empleado1.getCodigo();
-		}
-		if(empleado2!=null)
-		{
-			codigoEmpleado2=empleado2.getCodigo();
-		}
-		if(empleado3!=null)
-		{
-			codigoEmpleado3=empleado3.getCodigo();
-		}
-
-		if(!codigoEmpleado1.isEmpty())
-		{
-			cantidadUnidadesPrestadasEmpleado1=obtenerCantidadUnidadesPrestadas(codigoEmpleado1);
-		}
-		if(!codigoEmpleado2.isEmpty())
-		{
-			cantidadUnidadesPrestadasEmpleado2=obtenerCantidadUnidadesPrestadas(codigoEmpleado2);
-		}
-		if(!codigoEmpleado3.isEmpty())
-		{
-			cantidadUnidadesPrestadasEmpleado3=obtenerCantidadUnidadesPrestadas(codigoEmpleado3);
-		}
-
-		if(cantidadUnidadesPrestadasEmpleado1==0 && cantidadUnidadesPrestadasEmpleado2==0 && cantidadUnidadesPrestadasEmpleado3==0)
-		{
-			throw new SinObjetosPrestadosException("Ningún empleado posee objetos prestados");
-		}
-		else
-		{
-			empleadoAux=obtenerEmpleadoMasUnidadesPrestadas(cantidadUnidadesPrestadasEmpleado1,cantidadUnidadesPrestadasEmpleado2,
-															cantidadUnidadesPrestadasEmpleado3);
-			mensaje=empleadoAux.toString();
-			imprimirVentana(mensaje);
-		}
-	}
-	/**
-	 *
-	 * @param cantidadUnidadesPrestadasEmpleado1
-	 * @param cantidadUnidadesPrestadasEmpleado2
-	 * @param cantidadUnidadesPrestadasEmpleado3
-	 * @return
-	 */
-	private Empleado obtenerEmpleadoMasUnidadesPrestadas(int cantidadUnidadesPrestadasEmpleado1,
-			int cantidadUnidadesPrestadasEmpleado2, int cantidadUnidadesPrestadasEmpleado3) {
-		Empleado empleadoAux=null;
-		if(cantidadUnidadesPrestadasEmpleado1>cantidadUnidadesPrestadasEmpleado2 && cantidadUnidadesPrestadasEmpleado1>cantidadUnidadesPrestadasEmpleado3)
-		{
-			empleadoAux=empleado1;
-			return empleadoAux;
-		}
-		else
-		{
-			if(cantidadUnidadesPrestadasEmpleado2>cantidadUnidadesPrestadasEmpleado3)
-			{
-				empleadoAux=empleado2;
-				return empleado2;
-			}
-			else
-			{
-				empleadoAux=empleado3;
-				return empleadoAux;
-			}
-		}
-	}
-	/**
-	 * método que obtiene la cantidad de objetos prestados
-	 * por un empleado
-	 * @param codigoEmpleado
-	 * @return cantidadObjetos
-	 */
-	private int obtenerCantidadUnidadesPrestadas(String codigoEmpleado) {
-		int cantidadObjetos=0;
-		int numeroDetallePrestamo;
-		boolean pertenecePrestamo=false;
-		if(prestamo1!=null)
-		{
-			pertenecePrestamo=prestamo1.verificarEmpleadoCodigo(codigoEmpleado);
-			if(pertenecePrestamo==true)
-			{
-				numeroDetallePrestamo=1;
-				cantidadObjetos+=prestamo1.getunidadesPrestadasDetalle(numeroDetallePrestamo);
-				numeroDetallePrestamo++;
-				cantidadObjetos+=prestamo1.getunidadesPrestadasDetalle(numeroDetallePrestamo);
-				pertenecePrestamo=false;
-			}
-		}
-		if(prestamo2!=null)
-		{
-
-			pertenecePrestamo=prestamo2.verificarEmpleadoCodigo(codigoEmpleado);
-			if(pertenecePrestamo==true)
-			{
-				numeroDetallePrestamo=1;
-				cantidadObjetos+=prestamo2.getunidadesPrestadasDetalle(numeroDetallePrestamo);
-				numeroDetallePrestamo++;
-				cantidadObjetos+=prestamo2.getunidadesPrestadasDetalle(numeroDetallePrestamo);
-				pertenecePrestamo=false;
-			}
-		}
-		if(prestamo3!=null)
-		{
-			pertenecePrestamo=prestamo3.verificarEmpleadoCodigo(codigoEmpleado);
-			if(pertenecePrestamo==true)
-			{
-				numeroDetallePrestamo=1;
-				cantidadObjetos+=prestamo3.getunidadesPrestadasDetalle(numeroDetallePrestamo);
-				numeroDetallePrestamo++;
-				cantidadObjetos+=prestamo3.getunidadesPrestadasDetalle(numeroDetallePrestamo);
-				pertenecePrestamo=false;
-			}
-		}
-
-		return cantidadObjetos;
-	}
-	/**
-	 * método que imprime el total de dinero con el que
-	 * cuenta la empresa
-	 * @throws SinPrestamosRegistradosException
-	 */
-	public void imprimirTotalDineroEmpresa() throws SinPrestamosRegistradosException {
-		double totalDinero=0;
-		String mensaje="";
-
-		if(prestamo1==null && prestamo2==null && prestamo3==null)
-			throw new SinPrestamosRegistradosException("No hay prestamos registrados...");
-		if(prestamo1!=null)
-		{
-			totalDinero+=prestamo1.getValor();
-		}
-		if(prestamo2!=null)
-		{
-			totalDinero+=prestamo2.getValor();
-		}
-		if(prestamo3!=null)
-		{
-			totalDinero+=prestamo3.getValor();
-		}
-		mensaje+="El dinero recaudado  de la empresa es :"+totalDinero;
-		imprimirVentana(mensaje);
-	}
-	public void imprimirTotalPagarEmpleados() throws SinEmpleadosRegistradosException, EmpleadoNoEncontradoException {
-		double totalPagar=0;
-		String codigoEmpleado1="";
-		String codigoEmpleado2="";
-		String codigoEmpleado3="";
-		String mensaje="";
-
-		Empleado empleadoAux=null;
-		if(empleado1==null && empleado2==null && empleado3==null)
-			throw new SinEmpleadosRegistradosException("No hay empleados a los cuales pagar el sueldo...");
-
-		if(empleado1!=null)
-		{
-			codigoEmpleado1=empleado1.getCodigo();
-		}
-		if(empleado2!=null)
-		{
-			codigoEmpleado2=empleado2.getCodigo();
-		}
-		if(empleado3!=null)
-		{
-			codigoEmpleado3=empleado3.getCodigo();
-		}
-
-		if(!codigoEmpleado1.isEmpty())
-		{
-			totalPagar+=obtenerSalarioEmpleado(codigoEmpleado1);
-		}
-		if(!codigoEmpleado2.isEmpty())
-		{
-			totalPagar+=obtenerSalarioEmpleado(codigoEmpleado2);
-		}
-		if(!codigoEmpleado3.isEmpty())
-		{
-			totalPagar+=obtenerSalarioEmpleado(codigoEmpleado3);
-		}
-		mensaje+="El total a pagar a los empleados es de :"+totalPagar;
-		imprimirVentana(mensaje);
-	}
-	private double obtenerSalarioEmpleado(String codigoEmpleado) throws EmpleadoNoEncontradoException {
-		Empleado empleadoAux=null;
-		double salarioEmpleado=0;
-		double valorPrestamo=0;
-		int    aniosExperiencia=0;
-		double bonificacion=0;
-		boolean pertenecePrestamo=false;
-		empleadoAux=obtenerEmpleado(codigoEmpleado);
-		aniosExperiencia=empleadoAux.getAniosExperiencia();
-
-		if(prestamo1!=null)
-		{
-			pertenecePrestamo=prestamo1.verificarEmpleadoCodigo(codigoEmpleado);
-			if(pertenecePrestamo==true)
-			{
-				valorPrestamo=prestamo1.getValor();
-				bonificacion=(valorPrestamo*0.02)*aniosExperiencia;
-				salarioEmpleado+=(valorPrestamo*0.2)+bonificacion;
-				pertenecePrestamo=false;
-			}
-		}
-		if(prestamo2!=null)
-		{
-			pertenecePrestamo=prestamo2.verificarEmpleadoCodigo(codigoEmpleado);
-			if(pertenecePrestamo==true)
-			{
-				valorPrestamo=prestamo2.getValor();
-				bonificacion=(valorPrestamo*0.02)*aniosExperiencia;
-				salarioEmpleado+=(valorPrestamo*0.2)+bonificacion;
-				pertenecePrestamo=false;
-			}
-		}
-		if(prestamo3!=null)
-		{
-			pertenecePrestamo=prestamo3.verificarEmpleadoCodigo(codigoEmpleado);
-			if(pertenecePrestamo==true)
-			{
-				valorPrestamo=prestamo3.getValor();
-				bonificacion=(valorPrestamo*0.02)*aniosExperiencia;
-				salarioEmpleado+=(valorPrestamo*0.2)+bonificacion;
-				pertenecePrestamo=false;
-			}
-		}
-
-
-		return salarioEmpleado;
-	}
 	/**
  * método que retorna el toString de un empleado usando su código
  * si el empleado no es encontrado se genera la excepción
@@ -1722,46 +1276,6 @@ public void eliminarCliente(String documento) throws ClienteNoEncontradoExceptio
 		throw new ClienteNoEncontradoException("El cliente no ha sido encontrado...");
 	}
 
-}
-
-public String obtenerObjetosPrestadosPrecioMayor(double precioMayor)
-{
-	String objetosPrestados="";
-	String auxiliar="";
-	for(int i=0;i<listaPrestamos.length;i++)
-	{
-		if(listaPrestamos!=null)
-		{
-			auxiliar=listaPrestamos[i].obtenerObjetosPrestadosPrecioMayor(precioMayor);
-			if(!auxiliar.isEmpty())
-			{
-				objetosPrestados+=auxiliar;
-			}
-		}
-	}
-	return objetosPrestados;
-}
-/**
- * método que calcula la cantidad de unidades prestadas de un prestamo,
- *
- * @param codigo
- * @return cantidadUnidadesPrestadas
- * @throws PrestamoNoEncontradoException
- * @throws SinObjetosPrestadosException
- */
-public int retornarCantidadUnidadesPrestadas(String codigo) throws PrestamoNoEncontradoException, SinObjetosPrestadosException
-{
-	int cantidadUnidadesPrestadas=0;
-	Prestamo prestamoAux=null;
-	prestamoAux=obtenerPrestamo(codigo);
-	cantidadUnidadesPrestadas=prestamoAux.obtenerCantidadUnidadesPrestadas();
-	if(cantidadUnidadesPrestadas==0)
-	{
-		throw new SinObjetosPrestadosException("El prestamo no posee objetos prestados...");
-	}
-
-
-return cantidadUnidadesPrestadas;
 }
 
 

@@ -15,7 +15,6 @@ public class Objeto {
 	private int    unidadesDisponibles;
 	private double valorUnitario;
 	private double peso;
-	private double valorAlquiler;
 	TipoObjeto tipoObjeto;
 	/**
 	 * método constructor de la clase Objeto
@@ -31,7 +30,7 @@ public class Objeto {
 	 * @param tipoObjeto
 	 */
 	public Objeto(String nombre, String codigo, String descripción, String color,String estado,
-			int unidadesDisponibles, double valorUnitario, double peso, double valorAlquiler, int tipoObjeto) {
+			int unidadesDisponibles, double valorUnitario, double peso,  int tipoObjeto) {
 		super();
 		this.nombre = nombre;
 		this.codigo = codigo;
@@ -41,7 +40,6 @@ public class Objeto {
 		this.unidadesDisponibles = unidadesDisponibles;
 		this.valorUnitario = valorUnitario;
 		this.peso = peso;
-		this.valorAlquiler = valorAlquiler;
 		this.tipoObjeto =definirTipoObjeto(tipoObjeto); 
 	}
 	/**
@@ -116,12 +114,7 @@ public class Objeto {
 	public void setPeso(double peso) {
 		this.peso = peso;
 	}
-	public double getValorAlquiler() {
-		return valorAlquiler;
-	}
-	public void setValorAlquiler(double valorAlquiler) {
-		this.valorAlquiler = valorAlquiler;
-	}
+
 	public TipoObjeto getTipoObjeto() {
 		return tipoObjeto;
 	}
@@ -133,7 +126,7 @@ public class Objeto {
 	public String toString() {
 		return "Objeto [nombre=" + nombre + ", codigo=" + codigo + ", descripción=" + descripción + ", color=" + color
 				+ ", estado=" + estado + ", unidadesDisponibles=" + unidadesDisponibles + ", valorUnitario="
-				+ valorUnitario + ", peso=" + peso + ", valorAlquiler=" + valorAlquiler + ", tipoObjeto=" + tipoObjeto
+				+ valorUnitario + ", peso=" + peso + ", valorAlquiler=" + ", tipoObjeto=" + tipoObjeto
 				+ "]";
 	}
 	private static boolean definirEstado(String estadoAux)
@@ -219,21 +212,4 @@ public class Objeto {
 		}
 		return tipoObjetoAux;
 	}
-	/**
-	 * método que verifica si el precio del alquiler es mayor al
-	 * precio mayor,
-	 * @param precioMayor
-	 * @return esMayor
-	 */
-	public boolean validarPrecioMayor(double precioMayor) {
-		boolean esMayor=false;
-		if(valorAlquiler>precioMayor)
-			esMayor=true;
-		return esMayor;
-	}
-
-	
-	
-	
-
 }
