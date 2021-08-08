@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="765.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.prestamoobjeto.controller.EmpresaPrestamoObjetosController">
+   <children>
+      <TabPane layoutX="14.0" layoutY="14.0" prefHeight="803.0" prefWidth="824.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Clientes">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5006675567423231" layoutX="-2.0" layoutY="14.0" orientation="VERTICAL" prefHeight="751.0" prefWidth="839.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="821.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" text="Información del Cliente" />
+                                    <Label layoutX="1.0" layoutY="56.0" text="Nombre(s):" />
+                                    <TextField fx:id="txtNombreCliente" layoutX="93.0" layoutY="52.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtApellidoCliente" layoutX="93.0" layoutY="91.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="2.0" layoutY="95.0" text="Apellido(s)" />
+                                    <Label layoutX="1.0" layoutY="135.0" text="Documento:" />
+                                    <TextField fx:id="txtDocumentoCliente" layoutX="93.0" layoutY="131.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtDireccionCliente" layoutX="93.0" layoutY="174.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="1.0" layoutY="176.0" text="Dirección:" />
+                                    <Separator layoutX="14.0" layoutY="37.0" prefHeight="4.0" prefWidth="777.0" />
+                                    <Separator layoutX="13.0" layoutY="318.0" prefHeight="2.0" prefWidth="774.0" />
+                                    <Button fx:id="btnNuevoCliente" layoutX="123.0" layoutY="332.0" mnemonicParsing="false" onAction="#nuevoClienteAction" prefHeight="25.0" prefWidth="129.0" text="Nuevo" />
+                                    <Button fx:id="btnAgregarCliente" layoutX="332.0" layoutY="332.0" mnemonicParsing="false" onAction="#agregarClienteAction" prefHeight="25.0" prefWidth="129.0" text="Agregar" />
+                                    <Button fx:id="btnActualizarCliente" layoutX="542.0" layoutY="332.0" mnemonicParsing="false" onAction="#actualizarClienteAction" prefHeight="25.0" prefWidth="129.0" text="Actualizar" />
+                                    <Label layoutX="1.0" layoutY="216.0" prefHeight="17.0" prefWidth="51.0" text="Ciudad:" />
+                                    <Label layoutY="259.0" prefHeight="17.0" prefWidth="82.0" text="Departamento:" />
+                                    <Label layoutX="377.0" layoutY="56.0" text="Pais Residencia:" />
+                                    <Label layoutX="377.0" layoutY="95.0" prefHeight="17.0" prefWidth="92.0" text="Tel. Residencia:" />
+                                    <TextField fx:id="txtCiudadCliente" layoutX="93.0" layoutY="212.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtDepartamentoCliente" layoutX="93.0" layoutY="255.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtPaisCliente" layoutX="468.0" layoutY="52.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtTelResidenciaCliente" layoutX="468.0" layoutY="91.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtTelCelularCliente" layoutX="468.0" layoutY="131.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="377.0" layoutY="135.0" text="Tel. Celular:" />
+                                    <Label layoutX="377.0" layoutY="178.0" text="Profesión:" />
+                                    <Label layoutX="377.0" layoutY="216.0" text="Correo:" />
+                                    <TextField fx:id="txtProfesionCliente" layoutX="468.0" layoutY="172.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtCorreoCliente" layoutX="468.0" layoutY="212.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="377.0" layoutY="259.0" text="Tipo Documento:" />
+                                    <ComboBox fx:id="comboTipoDocumentoCliente" layoutX="470.0" layoutY="255.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="1.0" layoutY="294.0" text="Genero:" />
+                                    <ComboBox fx:id="comboGeneroCliente" layoutX="93.0" layoutY="290.0" prefHeight="25.0" prefWidth="276.0" />
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" text="Lista de clientes" />
+                                    <TableView fx:id="tableClientes" layoutX="14.0" layoutY="42.0" prefHeight="277.0" prefWidth="779.0">
+                                      <columns>
+                                        <TableColumn fx:id="columnNombreCliente" prefWidth="152.0" text="Nombre(s)" />
+                                        <TableColumn fx:id="columnApellidoCliente" prefWidth="185.0" text="Apellido(s)" />
+                                          <TableColumn fx:id="columnDocumentoCliente" prefWidth="188.0" text="Documento" />
+                                          <TableColumn fx:id="columnDireccionCliente" prefWidth="250.0" text="Dirección" />
+                                      </columns>
+                                    </TableView>
+                                    <Button fx:id="btnEliminarCliente" layoutX="104.0" layoutY="10.0" mnemonicParsing="false" onAction="#eliminarClienteAction" prefHeight="25.0" prefWidth="129.0" text="Eliminar" />
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Empleados">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5006675567423231" layoutX="-2.0" layoutY="14.0" orientation="VERTICAL" prefHeight="751.0" prefWidth="839.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="821.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" text="Información del Empleado" />
+                                    <Label layoutX="1.0" layoutY="56.0" text="Nombre(s):" />
+                                    <TextField fx:id="txtNombreEmpleado" layoutX="96.0" layoutY="52.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtApellidoEmpleado" layoutX="96.0" layoutY="91.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="2.0" layoutY="95.0" text="Apellido(s)" />
+                                    <Label layoutX="1.0" layoutY="135.0" text="Documento:" />
+                                    <TextField fx:id="txtDocumentoEmpleado" layoutX="96.0" layoutY="131.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtDireccionEmpleado" layoutX="96.0" layoutY="172.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="1.0" layoutY="176.0" text="Dirección:" />
+                                    <Separator layoutX="14.0" layoutY="37.0" prefHeight="4.0" prefWidth="777.0" />
+                                    <Separator layoutX="10.0" layoutY="321.0" prefHeight="2.0" prefWidth="774.0" />
+                                    <Button fx:id="btnNuevoEmpleado" layoutX="124.0" layoutY="334.0" mnemonicParsing="false" onAction="#nuevoEmpleadoAction" prefHeight="25.0" prefWidth="129.0" text="Nuevo" />
+                                    <Button fx:id="btnAgregarEmpleado" layoutX="332.0" layoutY="334.0" mnemonicParsing="false" onAction="#agregarEmpleadoAction" prefHeight="25.0" prefWidth="129.0" text="Agregar" />
+                                    <Button fx:id="btnActualizarEmpleado" layoutX="549.0" layoutY="334.0" mnemonicParsing="false" onAction="#actualizarEmpleadoAction" prefHeight="25.0" prefWidth="129.0" text="Actualizar" />
+                                    <Label layoutX="1.0" layoutY="216.0" prefHeight="17.0" prefWidth="51.0" text="Ciudad:" />
+                                    <Label layoutY="254.0" prefHeight="17.0" prefWidth="82.0" text="Departamento:" />
+                                    <Label layoutX="377.0" layoutY="56.0" text="Pais Residencia:" />
+                                    <Label layoutX="377.0" layoutY="95.0" prefHeight="17.0" prefWidth="92.0" text="Tel. Residencia:" />
+                                    <TextField fx:id="txtCiudadEmpleado" layoutX="96.0" layoutY="212.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtDepartamentoEmpleado" layoutX="96.0" layoutY="250.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtPaisEmpleado" layoutX="468.0" layoutY="52.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtTelResidenciaEmpleado" layoutX="468.0" layoutY="91.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtTelCelularEmpleado" layoutX="468.0" layoutY="131.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="377.0" layoutY="135.0" text="Tel. Celular:" />
+                                    <Label layoutX="378.0" layoutY="176.0" text="Correo:" />
+                                    <TextField fx:id="txtCorreoEmpleado" layoutX="468.0" layoutY="172.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="377.0" layoutY="217.0" text="Tipo Documento:" />
+                                    <ComboBox fx:id="comboTipoDocumentoEmpleado" layoutX="468.0" layoutY="213.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtAniosExperienciaEmpleado" layoutX="96.0" layoutY="287.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutY="291.0" prefHeight="17.0" prefWidth="96.0" text="Años Experiencia:" />
+                                    <Label layoutX="377.0" layoutY="254.0" text="Tipo Empleado:" />
+                                    <ComboBox fx:id="comboTipoEmpleado" layoutX="468.0" layoutY="250.0" prefHeight="25.0" prefWidth="276.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="816.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" text="Lista de empleados" />
+                                    <TableView fx:id="tableEmpleados" layoutX="14.0" layoutY="42.0" prefHeight="277.0" prefWidth="779.0">
+                                       <columns>
+                                          <TableColumn fx:id="columnNombreEmpleados" prefWidth="152.0" text="Nombre(s)" />
+                                          <TableColumn fx:id="columnApellidoEmpleados" prefWidth="185.0" text="Apellido(s)" />
+                                          <TableColumn fx:id="columnDocumentoEmpleado" prefWidth="188.0" text="Documento" />
+                                          <TableColumn fx:id="columnDireccionEmpleados" prefWidth="250.0" text="Dirección" />
+                                       </columns>
+                                    </TableView>
+                                    <Button fx:id="btnEliminarEmpleados" layoutX="123.0" layoutY="10.0" mnemonicParsing="false" onAction="#eliminarEmpleadoAction" prefHeight="25.0" prefWidth="129.0" text="Eliminar" />
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Objetos">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5006675567423231" layoutX="-2.0" layoutY="14.0" orientation="VERTICAL" prefHeight="751.0" prefWidth="839.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="821.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" text="Información del Objeto" />
+                                    <Label layoutX="1.0" layoutY="56.0" text="Nombre(s):" />
+                                    <TextField fx:id="txtNombreObjeto" layoutX="82.0" layoutY="52.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtCodigoObjeto" layoutX="83.0" layoutY="91.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="2.0" layoutY="95.0" text="Codigo:" />
+                                    <Label layoutX="378.0" layoutY="174.0" text="Descripción:" />
+                                    <TextField fx:id="txtDescripcionObjeto" layoutX="468.0" layoutY="170.0" prefHeight="21.0" prefWidth="276.0" />
+                                    <Label layoutX="374.0" layoutY="217.0" text="Estado:" />
+                                    <Separator layoutX="14.0" layoutY="37.0" prefHeight="4.0" prefWidth="777.0" />
+                                    <Separator layoutX="16.0" layoutY="317.0" prefHeight="2.0" prefWidth="774.0" />
+                                    <Button fx:id="btnNuevoObjeto" layoutX="123.0" layoutY="334.0" mnemonicParsing="false" onAction="#nuevoObjetoAction" prefHeight="25.0" prefWidth="129.0" text="Nuevo" />
+                                    <Button fx:id="btnAgregarObjeto" layoutX="329.0" layoutY="334.0" mnemonicParsing="false" onAction="#agregarObjetoAction" prefHeight="25.0" prefWidth="129.0" text="Agregar" />
+                                    <Button fx:id="btnActualizarObjeto" layoutX="542.0" layoutY="334.0" mnemonicParsing="false" onAction="#actualizarObjetoAction" prefHeight="25.0" prefWidth="129.0" text="Actualizar" />
+                                    <Label layoutX="5.0" layoutY="219.0" prefHeight="17.0" prefWidth="51.0" text="Foto:" />
+                                    <Label layoutX="377.0" layoutY="56.0" text="Color:" />
+                                    <Label layoutX="377.0" layoutY="95.0" prefHeight="17.0" prefWidth="92.0" text="Peso  (kg):" />
+                                    <TextField fx:id="txtColorObjeto" layoutX="468.0" layoutY="52.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtPesoObjeto" layoutX="468.0" layoutY="91.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <TextField fx:id="txtValorUnitarioObjeto" layoutX="83.0" layoutY="131.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="2.0" layoutY="135.0" text="Valor Unitario:" />
+                                    <Label fx:id="labelEstadoObjeto" layoutX="469.0" layoutY="217.0" prefHeight="17.0" prefWidth="88.0" text="..." />
+                                    <ImageView fx:id="imageObjeto" fitHeight="101.0" fitWidth="169.0" layoutX="82.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true" />
+                                    <TextField fx:id="txtUnidadesDisponiblesObjeto" layoutX="469.0" layoutY="131.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="377.0" layoutY="135.0" prefHeight="17.0" prefWidth="92.0" text="Uni. Disponibles:" />
+                                    <ComboBox fx:id="comboTipoObjeto" layoutX="83.0" layoutY="170.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="2.0" layoutY="174.0" text="Tipo Objeto:" />
+                                    <Button fx:id="btnSeleccionarFoto" layoutX="329.0" layoutY="282.0" mnemonicParsing="false" onAction="#seleccionarFotoAction" prefHeight="25.0" prefWidth="129.0" text="Seleccionar Foto" />
+                                    <Label layoutX="593.0" layoutY="219.0" text="Uni.Prestadas" />
+                                    <Label fx:id="labelUnidadesPrestadas" layoutX="684.0" layoutY="219.0" prefHeight="17.0" prefWidth="122.0" text="..." />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="298.0" prefWidth="816.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="16.0" text="Lista de objetos" />
+                                    <TableView fx:id="tableObjetos" layoutX="14.0" layoutY="42.0" prefHeight="277.0" prefWidth="779.0">
+                                       <columns>
+                                          <TableColumn fx:id="columnNombreObjeto" prefWidth="152.0" text="Nombre(s)" />
+                                          <TableColumn fx:id="columnCodigoObjeto" prefWidth="185.0" text="Codigo" />
+                                          <TableColumn fx:id="columnDescripcionObjeto" prefWidth="188.0" text="Descripción" />
+                                          <TableColumn fx:id="columnEstadoObjeto" prefWidth="250.0" text="Estado" />
+                                       </columns>
+                                    </TableView>
+                                    <Button fx:id="btnEliminarObjeto" layoutX="350.0" layoutY="328.0" mnemonicParsing="false" onAction="#eliminarObjetoAction" prefHeight="25.0" prefWidth="129.0" text="Eliminar" />
+                                    <Label layoutX="333.0" layoutY="16.0" prefHeight="17.0" prefWidth="71.0" text="Filtrar trabla:" />
+                                    <ComboBox fx:id="comboFiltrar" layoutX="404.0" layoutY="13.0" prefHeight="22.0" prefWidth="150.0" />
+                                    <Button fx:id="btnActualizarTablaObjeto" layoutX="560.0" layoutY="11.0" mnemonicParsing="false" onAction="#actualizarTablaAction" prefHeight="25.0" prefWidth="111.0" text="Actualizar tabla" />
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Gestión de prestamos">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5006675567423231" layoutX="-2.0" layoutY="14.0" orientation="VERTICAL" prefHeight="751.0" prefWidth="839.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="383.0" prefWidth="837.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" text="Información de prestamos" />
+                                    <Label layoutX="1.0" layoutY="56.0" text="Codigo Prestamo:" />
+                                    <TextField fx:id="txtCodigoPrestamo" layoutX="101.0" layoutY="52.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutY="145.0" text="Fecha Prestamo: " />
+                                    <Separator layoutX="14.0" layoutY="37.0" prefHeight="4.0" prefWidth="777.0" />
+                                    <Separator layoutX="15.0" layoutY="307.0" prefHeight="2.0" prefWidth="774.0" />
+                                    <Button fx:id="btnNuevoPrestamo" layoutX="116.0" layoutY="333.0" mnemonicParsing="false" onAction="#nuevoPrestamoAction" prefHeight="25.0" prefWidth="129.0" text="Nuevo" />
+                                    <Button fx:id="btnAgregarPrestamo" layoutX="340.0" layoutY="333.0" mnemonicParsing="false" onAction="#agregarPrestamoAction" prefHeight="25.0" prefWidth="129.0" text="Agregar" />
+                                    <Button fx:id="btnActualizarPrestamo" layoutX="556.0" layoutY="333.0" mnemonicParsing="false" onAction="#actualizarPrestamoAction" prefHeight="25.0" prefWidth="129.0" text="Actualizar" />
+                                    <Label layoutX="404.0" layoutY="56.0" text="Fecha Entrega:" />
+                                    <Label fx:id="labelFechaPrestamo" layoutX="101.0" layoutY="145.0" prefHeight="17.0" prefWidth="135.0" text="..." />
+                                    <Label layoutX="402.0" layoutY="145.0" text="Estado:" />
+                                    <Label layoutY="236.0" text="Valor:" />
+                                    <Label fx:id="labelEstadoPrestamo" layoutX="491.0" layoutY="145.0" prefHeight="17.0" prefWidth="161.0" text="..." />
+                                    <Label fx:id="labelValorPrestamo" layoutX="100.0" layoutY="236.0" prefHeight="17.0" prefWidth="138.0" text="..." />
+                                    <Label layoutX="402.0" layoutY="103.0" text="Doc. Cliente:" />
+                                    <TextField fx:id="txtDocumentoClientePrestamo" layoutX="492.0" layoutY="98.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <Label layoutX="1.0" layoutY="102.0" text="Doc. Empleado:" />
+                                    <TextField fx:id="txtDocumentoEmpleadoPrestamo" layoutX="101.0" layoutY="98.0" prefHeight="25.0" prefWidth="276.0" />
+                                    <DatePicker fx:id="dateFechaEntregaPrestamo" layoutX="492.0" layoutY="52.0" prefWidth="276.0" />
+                                    <Label layoutX="402.0" layoutY="192.0" text="Dias solicitados:" />
+                                    <Label fx:id="labelDiasSolicitadosPreestamo" layoutX="492.0" layoutY="192.0" prefHeight="17.0" prefWidth="161.0" text="..." />
+                                    <Label layoutX="1.0" layoutY="193.0" text="Dias transcurridos:" />
+                                    <Label fx:id="labelDiasTranscurridosPrestamo" layoutX="101.0" layoutY="195.0" prefHeight="17.0" prefWidth="161.0" text="..." />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="345.0" prefWidth="837.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="41.0" text="Lista de prestamos" />
+                                    <HBox layoutX="36.0" layoutY="81.0" prefHeight="256.0" prefWidth="700.0">
+                                       <children>
+                                          <TableView fx:id="tablePrestamo" prefHeight="256.0" prefWidth="437.0">
+                                             <columns>
+                                                <TableColumn fx:id="columnCodigoPrestamo" prefWidth="198.0" text="Codigo (Prestamo)" />
+                                                <TableColumn fx:id="columnFechaEntrega" prefWidth="204.0" text="Fecha de Entrega" />
+                                             </columns>
+                                          </TableView>
+                                          <TableView fx:id="tableDocumentoClientePrestamo" prefHeight="200.0" prefWidth="200.0">
+                                            <columns>
+                                              <TableColumn fx:id="columnDocumentoClientePrestamoInf" prefWidth="161.0" text="Documento Cliente" />
+                                            </columns>
+                                          </TableView>
+                                          <TableView fx:id="tableDocumentoEmpleadoPrestamo" prefHeight="256.0" prefWidth="178.0">
+                                            <columns>
+                                              <TableColumn fx:id="columnDocumentoEmpleadoPrestamoInf" prefWidth="139.0" text="Documento Empleado" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Detalle prestamo">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5006675567423231" layoutX="-2.0" layoutY="14.0" orientation="VERTICAL" prefHeight="751.0" prefWidth="839.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="383.0" prefWidth="837.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" text="Información de detalle prestamo" />
+                                    <Label layoutX="1.0" layoutY="56.0" text="Codigo Prestamo:" />
+                                    <TextField fx:id="txtCodigoPrestamoDetalle" layoutX="95.0" layoutY="52.0" prefHeight="25.0" prefWidth="290.0" />
+                                    <Separator layoutX="14.0" layoutY="37.0" prefHeight="4.0" prefWidth="777.0" />
+                                    <Separator layoutX="17.0" layoutY="239.0" prefHeight="2.0" prefWidth="774.0" />
+                                    <Button fx:id="btnNuevoDetallePrestamo" layoutX="176.0" layoutY="290.0" mnemonicParsing="false" onAction="#nuevoDetallePrestamoAction" prefHeight="25.0" prefWidth="129.0" text="Nuevo" />
+                                    <Button fx:id="btnAgregarDetallePrestamo" layoutX="527.0" layoutY="290.0" mnemonicParsing="false" onAction="#agregarDetallePrestamoAction" prefHeight="25.0" prefWidth="129.0" text="Agregar" />
+                                    <Label layoutX="1.0" layoutY="169.0" text="Uni. Prestadas:" />
+                                    <Label layoutX="402.0" layoutY="169.0" text="SubTotal:" />
+                                    <Label layoutX="402.0" layoutY="56.0" text="Codigo Objeto:" />
+                                    <TextField fx:id="txtCodigoObjetoDetalle" layoutX="489.0" layoutY="52.0" prefHeight="25.0" prefWidth="290.0" />
+                                    <TextField fx:id="txtUnidadesPrestadasDetalle" layoutX="95.0" layoutY="165.0" prefHeight="25.0" prefWidth="290.0" />
+                                    <Label fx:id="labelSubTotal" layoutX="489.0" layoutY="169.0" text="..." />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="345.0" prefWidth="837.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="41.0" text="Lista de detalle prestamos" />
+                                    <HBox layoutX="10.0" layoutY="73.0" prefHeight="266.0" prefWidth="808.0">
+                                       <children>
+                                          <TableView fx:id="tableCodigoPrestamoDetalle" prefHeight="200.0" prefWidth="200.0">
+                                            <columns>
+                                              <TableColumn fx:id="columnCodigoPrestamoDetalle" prefWidth="199.0" text="Codigo(Prestamo)" />
+                                            </columns>
+                                          </TableView>
+                                          <TableView fx:id="tableCodigoObjetoDetalle" prefHeight="255.0" prefWidth="155.0">
+                                            <columns>
+                                              <TableColumn fx:id="columnCodigoObjetoDetalle" prefWidth="139.0" text="Codigo (Objeto)" />
+                                            </columns>
+                                          </TableView>
+                                          <TableView fx:id="tableDetallePrestamo" prefHeight="266.0" prefWidth="497.0">
+                                             <columns>
+                                                <TableColumn fx:id="columnUnidPrestadasDetalle" prefWidth="240.0" text="Unidades Prestadas" />
+                                                <TableColumn fx:id="columnSubtotalDetalle" prefWidth="242.0" text="SubTotal" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Objetos prestados">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5006675567423231" layoutX="-2.0" layoutY="14.0" orientation="VERTICAL" prefHeight="751.0" prefWidth="839.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="383.0" prefWidth="837.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="14.0" text="Información" />
+                                    <Label layoutX="14.0" layoutY="261.0" text="Dias restantes:" />
+                                    <Separator layoutX="14.0" layoutY="37.0" prefHeight="4.0" prefWidth="777.0" />
+                                    <Separator layoutX="15.0" layoutY="307.0" prefHeight="2.0" prefWidth="774.0" />
+                                    <Label fx:id="labelDiasRestantes" layoutX="101.0" layoutY="261.0" prefHeight="17.0" prefWidth="135.0" text="..." />
+                                    <Label layoutX="405.0" layoutY="261.0" text="Dias en mora:" />
+                                    <Label fx:id="labelDiasMora" layoutX="491.0" layoutY="261.0" prefHeight="17.0" prefWidth="161.0" text="..." />
+                                    <Label layoutX="408.0" layoutY="92.0" text="Doc. Cliente:" />
+                                    <Label layoutX="11.0" layoutY="92.0" text="Doc. Empleado:" />
+                                    <Label fx:id="labelDocCliente" layoutX="478.0" layoutY="92.0" prefHeight="17.0" prefWidth="135.0" text="..." />
+                                    <Label fx:id="labelDocEmpleado" layoutX="101.0" layoutY="92.0" prefHeight="17.0" prefWidth="135.0" text="..." />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="345.0" prefWidth="837.0">
+                                 <children>
+                                    <Label layoutX="14.0" layoutY="41.0" text="Lista de Información Inventario" />
+                                    <HBox layoutX="18.0" layoutY="75.0" prefHeight="280.0" prefWidth="796.0">
+                                       <children>
+                                          <TableView fx:id="tableInfPrestamo" prefHeight="280.0" prefWidth="143.0">
+                                            <columns>
+                                              <TableColumn fx:id="columnCodigoPrestamoInf" prefWidth="142.0" text="Codigo (Prestamo)" />
+                                            </columns>
+                                          </TableView>
+                                          <TableView fx:id="tableInfObjeto" prefHeight="280.0" prefWidth="376.0">
+                                             <columns>
+                                                <TableColumn fx:id="columnCodigoObjetoInf" prefWidth="146.0" text="Codigo (Objeto) " />
+                                                <TableColumn fx:id="columnTipoObjetoInf" prefWidth="229.0" text="Tipo del Objeto" />
+                                             </columns>
+                                          </TableView>
+                                          <TableView fx:id="tableUnidadesPrestadasInf" prefHeight="280.0" prefWidth="236.0">
+                                            <columns>
+                                              <TableColumn fx:id="columnUnidadesObjetoInf" prefWidth="235.0" text="Unidades Prestadas" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
